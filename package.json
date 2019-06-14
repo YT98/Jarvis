@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist/ && babel src/ --out-dir dist/",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js",
+    "clear-recordings": "rimraf recordings"
   },
   "author": "",
   "license": "ISC",
