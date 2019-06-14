@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-server": "rimraf dist/ && babel src/server/ --out-dir dist/server",
+    "build-server": "rimraf dist/server/ && babel src/server/ --out-dir dist/server",
     "start-server": "npm run build-server && node dist/server/index.js",
     "clear-recordings": "rimraf recordings",
     "dev": "webpack-dev-server --mode development"
