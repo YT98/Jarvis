@@ -20,6 +20,7 @@
     "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
+    "cors": "^2.8.5",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",

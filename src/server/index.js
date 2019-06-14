@@ -2,10 +2,15 @@
 import startRecording from './audio/startRecording';
 const fs = require('fs');
 const path = require('path');
-
 // Express imports
 import express from 'express';
 const app = express();
+import cors from 'cors';
+
+app.use(cors());
+app.get("/record", (req, res) => {
+    startRecording();
+});
 
 app.use(express.static('./dist/client/'));
 app.get("*", (req, res) => {
