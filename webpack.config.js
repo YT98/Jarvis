@@ -1,4 +1,8 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+    template: __dirname + "/src/client/index.html"
+});
 
 module.exports = {
     entry: './src/client/index.js',
@@ -20,7 +24,8 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        HtmlWebpackPluginConfig
     ],
     devServer: {
         contentBase: './dist/client',
