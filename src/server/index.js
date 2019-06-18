@@ -1,15 +1,16 @@
-// Audio imports
 import startRecording from './audio/startRecording';
 const fs = require('fs');
 const path = require('path');
-// Express imports
 import express from 'express';
 const app = express();
 import cors from 'cors';
 
+import ws from './ws';
+const socket = ws.setConnection();
+
 app.use(cors());
 app.get("/record", (req, res) => {
-    startRecording();
+    socket.send(JSON.stringify("It works?"));
 });
 
 app.use(express.static('./dist/client/'));

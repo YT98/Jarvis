@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-server": "rimraf dist/server/ && babel src/server/ --out-dir dist/server",
     "start-server": "npm run build-server && node dist/server/index.js",
+    "dev-server": "nodemon --exec babel-node src/server/index.js",
     "clear-recordings": "rimraf recordings",
     "dev": "webpack-dev-server --mode development"
   },
@@ -15,19 +16,22 @@
   "dependencies": {
     "express": "^4.17.1",
     "node-audiorecorder": "^1.4.1",
+    "node-static": "^0.7.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "ws": "^7.0.0"
   },
   "devDependencies": {
-    "cors": "^2.8.5",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "cors": "^2.8.5",
     "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.19.1",
     "rimraf": "^2.6.3",
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4",
