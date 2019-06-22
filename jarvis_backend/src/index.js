@@ -3,9 +3,6 @@ const fs = require('fs');
 const path = require('path');
 import express from 'express';
 const app = express();
-import cors from 'cors';
-
-app.use(cors());
 
 app.get('test', (req, res) => {
     res.status(200).set({
