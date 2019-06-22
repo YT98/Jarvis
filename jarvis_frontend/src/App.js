@@ -1,16 +1,19 @@
 import React from 'react';
 
-const evtSource = new EventSource("localhost:5000/test");
-
-evtSource.onmessage = (e) => {
-    console.log(e.data);
-}
+// Socket configuration
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {}
+    }
+
+    componentDidMount() {
+        // Log all messages from socket to console
+        socket.on('message', (message) => console.log(message));
     }
 
     render() {
