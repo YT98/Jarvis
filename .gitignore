@@ -1,4 +1,4 @@
-/node_modules/
-/dist
-/recordings
+*/node_modules/
+*/dist
+jarvis_backend/recordings
 /.vscode

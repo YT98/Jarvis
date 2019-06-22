@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: __dirname + "/src/client/index.html"
+    template: __dirname + "/src/index.html"
 });
 
 module.exports = {
-    entry: './src/client/index.js',
+    entry: './src/index.js',
     module: {
         rules: [
             {
@@ -19,7 +19,7 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     output: {
-        path: __dirname + '/dist/client',
+        path: __dirname + '/dist',
         publicPath: '/',
         filename: 'bundle.js'
     },
@@ -28,7 +28,7 @@ module.exports = {
         HtmlWebpackPluginConfig
     ],
     devServer: {
-        contentBase: './dist/client',
+        contentBase: './dist',
         hot: true
     }
 };
