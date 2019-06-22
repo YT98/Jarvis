@@ -3,3 +3,4 @@
 jarvis_backend/recordings
 /.vscode
 jarvis_backend/src/config.js
+jarvis_backend/src/currentWeather.json
