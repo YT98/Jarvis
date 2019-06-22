@@ -4,6 +4,8 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const cors = require('cors');
+const cron = require('node-cron');
+import { getCurrentWeather, saveCurrentWeather } from './getWeather';
 const SOCKET_PORT = 8000;
 const APP_PORT = 5000;
 
@@ -19,9 +21,14 @@ app.use((req, res, next) => {
 });
 app.use(cors());
 
+// Get current weather with cron job
+cron.schedule('0 * * * *', () => {
+    saveCurrentWeather();
+    console.log("Saving current weather every hour.")
+});
+
 // App specific routes for development purposes
 // To be later replaced by speech recognition fx
-import { getCurrentWeather } from './getWeather';
 const calendarAppJson = {
     "app": "calendar",
     "options": {
