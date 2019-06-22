@@ -2,3 +2,4 @@
 */dist
 jarvis_backend/recordings
 /.vscode
+jarvis_backend/src/config.js

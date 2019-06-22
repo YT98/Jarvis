@@ -21,15 +21,7 @@ app.use(cors());
 
 // App specific routes for development purposes
 // To be later replaced by speech recognition fx
-const weatherAppJson = {
-    "app": "weather",
-    "options": {
-        "scale": "day",
-        "date": "01/01/2019",
-        "startDate": "null",
-        "endDate": "null"
-    }
-}
+import { getCurrentWeather } from './getWeather';
 const calendarAppJson = {
     "app": "calendar",
     "options": {
@@ -40,7 +32,14 @@ const calendarAppJson = {
     }
 }
 app.get('/weather', (req, res) => {
-    req.io.emit('message', JSON.stringify(weatherAppJson));
+    getCurrentWeather()
+    .then(weatherData => {
+        let socketData = {
+            "app": "weather",
+            "data": weatherData
+        }
+        req.io.emit('message', JSON.stringify(socketData));
+    });
 });
 app.get('/calendar', (req, res) => {
     req.io.emit('message', JSON.stringify(calendarAppJson));
