@@ -2,7 +2,6 @@ import React from 'react';
 
 // Socket configuration
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000');
 
 export default class App extends React.Component {
 
@@ -15,9 +14,14 @@ export default class App extends React.Component {
 
     componentDidMount() {
         // Log all messages from socket to console
-        socket.on('message', (message) => {
-            let data = JSON.parse(message);
-            this.setState({ appName: data.app })
+        const socket = openSocket('http://localhost:8000');
+        this.setState({
+            socket: socket
+        }, () => {
+            socket.on('message', (message) => {
+                let data = JSON.parse(message);
+                this.setState({ appName: data.app })
+            });
         });
     }
 
