@@ -46,6 +46,7 @@ app.get('/weather', (req, res) => {
             "data": weatherData
         }
         req.io.emit('message', JSON.stringify(socketData));
+        res.send("Data emitted.");
     });
 });
 app.get('/calendar', (req, res) => {
