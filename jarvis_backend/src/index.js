@@ -38,6 +38,7 @@ const calendarAppJson = {
         "endDate": "null"
     }
 }
+
 app.get('/weather', (req, res) => {
     getCurrentWeather()
     .then(weatherData => {
@@ -49,6 +50,19 @@ app.get('/weather', (req, res) => {
         res.send("Data emitted.");
     });
 });
+
+app.get('/saveweather', (req, res) => {
+    saveCurrentWeather();
+    res.send("Current weather saved.")
+});
+
+app.get('/currentweather', (req, res) => {
+    console.log("Current weather requested");
+    let data = require('./currentWeather.json');
+    res.header("Content-Type", "application/json");
+    res.send(JSON.stringify(data));
+});
+
 app.get('/calendar', (req, res) => {
     req.io.emit('message', JSON.stringify(calendarAppJson));
 });
