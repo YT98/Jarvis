@@ -1,7 +1,6 @@
 import React from 'react';
-
-// Socket configuration
 import openSocket from 'socket.io-client';
+import Home from './Home';
 
 export default class App extends React.Component {
 
@@ -28,8 +27,8 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <h1> Hello, World! </h1>
                 <p> {this.state.appName} </p>
+                <Home/>
             </div>
         )
     }
