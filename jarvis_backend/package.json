@@ -17,7 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/speech": "^3.2.2",
+    "@grpc/grpc-js": "^0.4.3",
     "express": "^4.17.1",
+    "grpc": "^1.21.1",
     "newsapi": "^2.4.0",
     "node-audiorecorder": "^1.4.1",
     "node-cron": "^2.0.3",
