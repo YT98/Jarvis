@@ -1,26 +1,18 @@
-const express = require('express');
-const PORT = process.env.PORT || 5000;
+import express from 'express';
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-const cors = require('cors');
-const cron = require('node-cron');
+import cors from 'cors';
+import cron from 'node-cron';
+import { initializeSocket } from './socket';
 import { getCurrentWeather, saveCurrentWeather } from './getWeather';
 import { getHeadlines } from './getNews';
 const SOCKET_PORT = 8000;
 const APP_PORT = 5000;
 
-// Socket configuration
-io.on('connection', (client) => {
-    client.on('message', (message) => console.log(message));
-});
-
 // Express middleware configuration
-app.use((req, res, next) => {
-    req.io = io;
-    next();
-});
 app.use(cors());
+
+// Socket initialization
+initializeSocket(SOCKET_PORT, app);
 
 // Get current weather with cron job
 cron.schedule('0 * * * *', () => {
@@ -62,10 +54,6 @@ app.get('/news', (req, res) => {
     getHeadlines();
 });
 
-app.get('/calendar', (req, res) => {
-    req.io.emit('message', JSON.stringify(calendarAppJson));
-});
-
 import { startRecording } from './audio/startRecording';
 app.get('/record', (req, res) => {
     startRecording();
@@ -89,7 +77,5 @@ app.get('/transcribe', async (req, res) => {
 
 
 // Socket server listening
-io.listen(SOCKET_PORT);
-console.log(`Socket server listening on port ${SOCKET_PORT}`);
 // Express server listening
 app.listen(APP_PORT, () => console.log(`Express server listening on port ${APP_PORT}`));
