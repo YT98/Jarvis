@@ -7,6 +7,8 @@ import styled, { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
   }
 `
 
@@ -14,10 +16,9 @@ const AppContainer = styled.div`
     background-color: #7C989D;
     height: 100vh;
     width: 100vw;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 100;
     color: white;
     padding: 50px;
+    box-sizing: border-box;
 `
 
 export default class App extends React.Component {

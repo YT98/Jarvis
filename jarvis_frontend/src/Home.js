@@ -9,12 +9,10 @@ const HomeContainer = styled.div`
 
 const LeftSection = styled.div`
     float: left;
-    width: 200px;
 `
 
 const RightSection = styled.div`
     float: right;
-    width: 200px;
 `
 
 export default class Home extends React.Component {
@@ -24,11 +22,10 @@ export default class Home extends React.Component {
 
                 <LeftSection>
                     <HomeDateTimeWidget />
-                    <HomeWeatherWidget />
                 </LeftSection>
 
                 <RightSection>
-
+                    <HomeWeatherWidget />
                 </RightSection>
                 
             </HomeContainer>

@@ -4,14 +4,15 @@ import sunnyIcon from '../images/sunny.png';
 import cloudyIcon from '../images/cloudy.svg';
 
 const HomeWeatherWidgetContainer = styled.div`
+    display: flex;
+    align-items: center;
     p {
-        display: inline;
-        font-size: 100px;
-        margin: 0;
+        display: inline-block;
+        font-size: 80px;
+        margin: 0 10px 0 0;
     }
     img {
-        height: 100px;
-        display: inline-block;
+        height: 80px;
     }
 `
 

@@ -6,14 +6,14 @@ const monthArray = ["January", "February", "March", "April", "May", "June", "Jul
 
 const ClockWidget = styled.div`
     p {
-        font-size: 70px;
+        font-size: 100px;
         margin: 0 0 15px 0;
     }
 `
 
 const DateWidget = styled.div`
     p {
-        font-size: 20px;
+        font-size: 25px;
         margin: 0 0 5px 0;
     }
 `
