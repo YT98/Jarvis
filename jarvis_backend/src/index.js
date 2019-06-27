@@ -6,6 +6,7 @@ const io = require('socket.io')(server);
 const cors = require('cors');
 const cron = require('node-cron');
 import { getCurrentWeather, saveCurrentWeather } from './getWeather';
+import { getHeadlines } from './getNews';
 const SOCKET_PORT = 8000;
 const APP_PORT = 5000;
 
@@ -59,8 +60,13 @@ app.get('/saveweather', (req, res) => {
 app.get('/currentweather', (req, res) => {
     console.log("Current weather requested");
     let data = require('./currentWeather.json');
+    console.log(JSON.stringify(data));
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(data));
+});
+
+app.get('/news', (req, res) => {
+    getHeadlines();
 });
 
 app.get('/calendar', (req, res) => {
