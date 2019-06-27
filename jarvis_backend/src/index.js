@@ -81,13 +81,15 @@ app.get('/record', (req, res) => {
 
 import { getTranscription } from './speechApi';
 app.get('/transcribe', async (req, res) => {
-    try {
-        let transcription = await getTranscription();
-        res.send(transcription);
-    } catch (err) {
-        console.log(err);
-        res.send(err);
-    }
+    startRecording()
+    .then(fileName => {
+        getTranscription(fileName)
+        .then(transcription => {
+            res.send(transcription);
+        })
+        .catch(err => console.log(error));
+    })
+    .catch(err => console.log(error));
 });
 
 
