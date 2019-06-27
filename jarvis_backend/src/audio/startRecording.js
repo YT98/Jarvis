@@ -1,6 +1,8 @@
 const AudioRecorder = require('node-audiorecorder');
 const fs = require('fs');
 const path = require('path');
+const recordingsFormat = "raw";
+const recordingsDirectory = "recordings";
 
 // Audio Recorder object initialization
 const options = {
@@ -12,7 +14,7 @@ const options = {
     encoding: `signed-integer`,
     format: `S16_LE`,
     rate: 16000,
-    type: `wav`,
+    type: `${recordingsFormat}`,
 
     silence: 2,
     tresholdStart: 0.5,
@@ -24,12 +26,13 @@ let audioRecorder = new AudioRecorder(options, logger);
 
 function startRecording() {
     // Create path to write recordings to
-    const recordingsDirectory = "recordings";
+    
     if (!fs.existsSync(recordingsDirectory)) {
         fs.mkdirSync(recordingsDirectory);
     }
     // Create file path with random name
-    const fileName = path.join(recordingsDirectory, Math.random().toString(36).replace(/[^a-z]+/g, ``).substr(0, 4).concat(`.wav`));
+    const d = Date.now();
+    const fileName = path.join(recordingsDirectory, d.toString().concat(`.${recordingsFormat}`));
     console.log("Writing new recording file at", fileName);
     // Create write stream
     const fileStream = fs.createWriteStream(fileName, { encoding: "binary" });
@@ -50,4 +53,4 @@ function startRecording() {
 
 }
 
-export default startRecording;
+export { startRecording, recordingsFormat, recordingsDirectory };
