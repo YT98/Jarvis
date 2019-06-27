@@ -12,6 +12,13 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: ['babel-loader']
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
+                loader: 'url-loader?mime-type=image/png',
+                options: {
+                    limit: 25000,
+                },
             }
         ]
     },
