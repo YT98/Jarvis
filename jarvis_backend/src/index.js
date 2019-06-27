@@ -25,7 +25,7 @@ app.use(cors());
 // Get current weather with cron job
 cron.schedule('0 * * * *', () => {
     saveCurrentWeather();
-    console.log("Saving current weather every hour.")
+    console.log("Saving current weather - runs every hour.");
 });
 
 // App specific routes for development purposes
@@ -52,15 +52,8 @@ app.get('/weather', (req, res) => {
     });
 });
 
-app.get('/saveweather', (req, res) => {
-    saveCurrentWeather();
-    res.send("Current weather saved.")
-});
-
 app.get('/currentweather', (req, res) => {
-    console.log("Current weather requested");
     let data = require('./currentWeather.json');
-    console.log(JSON.stringify(data));
     res.header("Content-Type", "application/json");
     res.send(JSON.stringify(data));
 });
