@@ -73,6 +73,23 @@ app.get('/calendar', (req, res) => {
     req.io.emit('message', JSON.stringify(calendarAppJson));
 });
 
+import { startRecording } from './audio/startRecording';
+app.get('/record', (req, res) => {
+    startRecording();
+    res.send("Recording started");
+});
+
+import { getTranscription } from './speechApi';
+app.get('/transcribe', async (req, res) => {
+    try {
+        let transcription = await getTranscription();
+        res.send(transcription);
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
+
 
 // Socket server listening
 io.listen(SOCKET_PORT);
