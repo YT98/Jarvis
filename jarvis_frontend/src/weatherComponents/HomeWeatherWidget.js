@@ -1,7 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import sunnyIcon from '../images/sunny.png';
+import cloudyIcon from '../images/cloudy.svg';
 
 const HomeWeatherWidgetContainer = styled.div`
+    p {
+        display: inline;
+        font-size: 100px;
+        margin: 0;
+    }
+    img {
+        height: 100px;
+        display: inline-block;
+    }
 `
 
 export default class HomeWeatherWidget extends React.Component {
@@ -11,10 +22,22 @@ export default class HomeWeatherWidget extends React.Component {
 
         }
         this.getCurrentWeather = this.getCurrentWeather.bind(this);
+        this.getWeatherIcon = this.getWeatherIcon.bind(this);
     }
 
     componentDidMount() {
         this.getCurrentWeather();
+        console.log(sunnyIcon);
+    }
+
+    getWeatherIcon() {
+        switch(this.state.weather) {
+            case "Clouds":
+                return cloudyIcon;
+                break;
+            default:
+                return sunnyIcon;
+        }
     }
 
     getCurrentWeather() {
@@ -28,9 +51,8 @@ export default class HomeWeatherWidget extends React.Component {
     render() {
         return (
             <HomeWeatherWidgetContainer>
-                <p> Weather Widget </p>
-                <button onClick={() => this.getCurrentWeather()}> getCurrentWeather() </button>
-                <p> Current Temperature: {this.state.currentTemp} </p>
+                <p> {this.state.currentTemp}&#176; </p>
+                <img src={this.getWeatherIcon()} />
             </HomeWeatherWidgetContainer>
         )
     }
