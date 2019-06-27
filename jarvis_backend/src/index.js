@@ -79,17 +79,19 @@ app.get('/record', (req, res) => {
     res.send("Recording started");
 });
 
+import { actionSwitch } from './mirrorActions';
 import { getTranscription } from './speechApi';
 app.get('/transcribe', async (req, res) => {
     startRecording()
     .then(fileName => {
         getTranscription(fileName)
         .then(transcription => {
-            res.send(transcription);
+            let action = actionSwitch(transcription);
+            res.send(action);
         })
-        .catch(err => console.log(error));
+        .catch(e => console.log(e));
     })
-    .catch(err => console.log(error));
+    .catch(e => console.log(e));
 });
 
 
