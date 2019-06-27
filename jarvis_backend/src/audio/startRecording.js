@@ -25,32 +25,36 @@ const logger = console;
 let audioRecorder = new AudioRecorder(options, logger);
 
 function startRecording() {
-    // Create path to write recordings to
-    
-    if (!fs.existsSync(recordingsDirectory)) {
-        fs.mkdirSync(recordingsDirectory);
-    }
-    // Create file path with random name
-    const d = Date.now();
-    const fileName = path.join(recordingsDirectory, d.toString().concat(`.${recordingsFormat}`));
-    console.log("Writing new recording file at", fileName);
-    // Create write stream
-    const fileStream = fs.createWriteStream(fileName, { encoding: "binary" });
+    return new Promise((resolve, reject) => {
+        // Create path to write recordings to
+        if (!fs.existsSync(recordingsDirectory)) {
+            fs.mkdirSync(recordingsDirectory);
+        }
+        // Create file path with random name
+        const d = Date.now();
+        const fileName = path.join(recordingsDirectory, d.toString().concat(`.${recordingsFormat}`));
+        console.log("Writing new recording file at", fileName);
+        // Create write stream
+        const fileStream = fs.createWriteStream(fileName, { encoding: "binary" });
 
-    // Start and write to file
-    audioRecorder.start().stream().pipe(fileStream);
+        // Start and write to file
+        audioRecorder.start().stream().pipe(fileStream);
 
-    // Log information on the following events
-    audioRecorder.stream().on(`close`, function (code) {
-        console.warn(`Recording closed. Exit code: `, code);
+        // Log information on the following events
+        audioRecorder.stream().on(`close`, function (code) {
+            console.warn(`Recording closed. Exit code: `, code);
+            resolve(fileName);
+        });
+        audioRecorder.stream().on(`end`, function () {
+            console.warn(`Recording ended.`);
+        });
+        audioRecorder.stream().on(`error`, function () {
+            console.warn(`Recording error.`);
+            reject("Audio recorder error");
+        });
     });
-    audioRecorder.stream().on(`end`, function () {
-        console.warn(`Recording ended.`);
-    });
-    audioRecorder.stream().on(`error`, function () {
-        console.warn(`Recording error.`);
-    });
-
 }
+
+
 
 export { startRecording, recordingsFormat, recordingsDirectory };
