@@ -2,22 +2,8 @@ import speech from '@google-cloud/speech';
 import fs from 'fs';
 import { recordingsDirectory, recordingsFormat } from './audio/startRecording';
 
-// TO-DO: Make async?
-function getLatestRecording() {
-    let latest;
-    let files = fs.readdirSync(recordingsDirectory);
-    latest = files[0].substring(0, files[0].length - 4);
-    files.forEach((file) => {
-        let fileTime = file.substring(0, file.length - 4);
-        latest = fileTime > latest ? fileTime : latest;
-    });
-    latest = latest.concat(`.${recordingsFormat}`);
-    return latest;
-}
-
-async function getTranscription() {
+async function getTranscription(fileName) {
     const client = new speech.SpeechClient();
-    const fileName = __dirname + '/../recordings/' + getLatestRecording();
 
     const file = fs.readFileSync(fileName);
     const audioBytes = file.toString('base64');
