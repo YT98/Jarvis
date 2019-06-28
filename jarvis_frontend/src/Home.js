@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import HomeWeatherWidget from './weatherComponents/HomeWeatherWidget';
 import HomeDateTimeWidget from './miscComponents/HomeDateTimeWidget';
+import HomeCalendarWidget from './calendarComponents/HomeCalendarWidget';
 
 const HomeContainer = styled.div`
 
@@ -22,6 +23,7 @@ export default class Home extends React.Component {
 
                 <LeftSection>
                     <HomeDateTimeWidget />
+                    <HomeCalendarWidget />
                 </LeftSection>
 
                 <RightSection>
