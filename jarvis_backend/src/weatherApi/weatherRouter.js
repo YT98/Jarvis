@@ -21,4 +21,9 @@ router.get('/current', (req, res) => {
     res.send(JSON.stringify(data));
 });
 
+router.get('/current/save', (req, res) => {
+    saveCurrentWeather();
+    res.send("Current weather saved");
+})
+
 export default router;
