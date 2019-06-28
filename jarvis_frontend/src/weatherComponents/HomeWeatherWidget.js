@@ -7,7 +7,7 @@ function importAllIcons(r) {
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item) });
     return images;
 }
-const weatherIcons = importAllIcons(require.context('../images/weatherIcons', false, /\.(png|jpe?g|svg)$/));
+const weatherIcons = importAllIcons(require.context('../images/weatherIcons', false, /\.svg$/));
 
 const HomeWeatherWidgetContainer = styled.div`
     display: flex;
