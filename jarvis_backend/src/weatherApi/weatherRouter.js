@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 import { getCurrentWeather, saveCurrentWeather } from './getWeather';
 
 const router = express.Router();
@@ -16,9 +17,11 @@ const router = express.Router();
 // });
 
 router.get('/current', (req, res) => {
-    let data = require('../currentWeather.json');
-    res.header("Content-Type", "application/json");
-    res.send(JSON.stringify(data));
+    fs.readFile(__dirname + '/../currentWeather.json', (e, data) => {
+        if (e) console.log(e);
+        res.header("Content-Type", "application/json");
+        res.send(data);
+    });
 });
 
 router.get('/current/save', (req, res) => {
