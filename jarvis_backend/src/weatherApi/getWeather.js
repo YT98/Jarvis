@@ -8,9 +8,9 @@ const long = "-73.598900"
 const weatherFilePath = "./src/currentWeather.json"
 
 // Takes in weather api data and only returns relevant data
-function getRelevant(data) {
+function sanitizeData(data) {
     return {
-        currentTemp: data.currently.temperature,
+        currentTemp: Math.round(data.currently.temperature),
         weather: data.currently.icon,
         weatherDescription: data.currently.summary
     }
@@ -18,7 +18,7 @@ function getRelevant(data) {
 
 // Gets weather from open source map api
 function getCurrentWeather() {
-    return fetch(`https://api.darksky.net/forecast/${config.weatherApiKey}/${latitude},${longitude}?units=si&exclude=minutely,alerts,flags`)
+    return fetch(`https://api.darksky.net/forecast/${config.weatherApiKey}/${lat},${long}?units=si&exclude=minutely,alerts,flags`)
         .then(res => res.json())
         .catch(e => console.log(e));
 }
@@ -27,7 +27,7 @@ function getCurrentWeather() {
 function saveCurrentWeather() {
     getCurrentWeather()
     .then(data => {
-        let weatherJson = JSON.stringify(getRelevant(data));
+        let weatherJson = JSON.stringify(sanitizeData(data));
         fs.writeFile(weatherFilePath, weatherJson, (e) => {
             if (e) console.log(e);
             console.log(`Successfully saved weather to file ${weatherFilePath}`)
