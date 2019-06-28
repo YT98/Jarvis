@@ -3,8 +3,6 @@ import fs from 'fs';
 import config from '../config';
 import cron from 'node-cron';
 
-const city = "Montreal";
-const countryCode = "CA";
 const lat = "45.485350";
 const long = "-73.598900"
 const weatherFilePath = "./src/currentWeather.json"
