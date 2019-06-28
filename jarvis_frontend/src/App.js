@@ -3,7 +3,7 @@ import openSocket from 'socket.io-client';
 import Home from './Home';
 
 import PlaceholderAppInfo from './miscComponents/PlaceholderAppInfo';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 const socket = openSocket('http://localhost:8000');
 
@@ -14,6 +14,9 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 100;
   }
 `
+
+const theme = {
+}
 
 const AppContainer = styled.div`
     background-color: #7C989D;
@@ -51,9 +54,13 @@ export default class App extends React.Component {
     render() {
         return (
             <AppContainer>
-                <GlobalStyle/>
-                <PlaceholderAppInfo appName={this.state.appName} />
-                <Home/>
+                <ThemeProvider theme={theme}>
+                    <div>
+                        <GlobalStyle/>
+                        <PlaceholderAppInfo appName={this.state.appName} />
+                        <Home/>
+                    </div>
+                </ThemeProvider>
             </AppContainer>
         )
     }
