@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import weatherRouter from './weatherApi/weatherRouter';
+import calendarRouter from './calendarApi/calendarRouter';
 import { initializeWeatherCron } from './weatherApi/getWeather';
 import { initializeSocket } from './socket';
 import { startRecording } from './audio/startRecording';
@@ -14,6 +15,9 @@ app.use(cors());
 // Weather
 app.use('/weather', weatherRouter);
 initializeWeatherCron();
+
+// Calendar
+app.use('/calendar', calendarRouter);
 
 // Socket initialization
 const SOCKET_PORT = 8000;
