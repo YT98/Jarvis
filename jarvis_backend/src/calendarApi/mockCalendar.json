@@ -1,32 +1,25 @@
 {
     "events": [
         {
-            "name": "Meeting with John",
+            "name": "MAT1400",
             "allDay": ["false", ""],
-            "startTime": "2019-06-28T18:30:00-04:00",
-            "endTime": "2019-06-28T18:30:00-04:00",
-            "color": "yellow"
+            "startTime": "10:30",
+            "endTime": "11:30",
+            "color": "#F4B400"
         },
         {
             "name": "Physio Appointment",
             "allDay": ["false", ""],
-            "startTime": "2019-06-28T18:30:00-04:00",
-            "endTime": "2019-06-28T18:30:00-04:00",
-            "color": "red"
+            "startTime": "12:30",
+            "endTime": "13:30",
+            "color": "#DB4437"
         },
         {
             "name": "PHY1651",
             "allDay": ["false", ""],
-            "startTime": "2019-06-28T18:30:00-04:00",
-            "endTime": "2019-06-28T18:30:00-04:00",
-            "color": "blue"
-        },
-        {
-            "name": "St-Jean",
-            "allDay": ["true", "2019-07-09"],
-            "startTime": "",
-            "endTime": "",
-            "color": "green"
+            "startTime": "14:00",
+            "endTime": "17:30",
+            "color": "#4285F4"
         }
     ]
 }
