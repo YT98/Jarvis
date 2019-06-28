@@ -12,7 +12,7 @@ function sanitizeData(data) {
     return {
         currentTemp: Math.round(data.currently.temperature),
         weather: data.currently.icon,
-        weatherDescription: data.currently.summary
+        description: data.currently.summary
     }
 }
 
