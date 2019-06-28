@@ -1,6 +1,6 @@
 import speech from '@google-cloud/speech';
 import fs from 'fs';
-import { recordingsDirectory, recordingsFormat } from './audio/startRecording';
+import { recordingsDirectory, recordingsFormat } from '../audio/startRecording';
 
 async function getTranscription(fileName) {
     const client = new speech.SpeechClient();
