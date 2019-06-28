@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import sunnyIcon from '../images/sunny.png';
-import cloudyIcon from '../images/cloudy.svg';
+
+// Imports all weather icons from '../images/weatherIcons/'
+function importAllIcons(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item) });
+    return images;
+}
+const weatherIcons = importAllIcons(require.context('../images/weatherIcons', false, /\.(png|jpe?g|svg)$/));
 
 const HomeWeatherWidgetContainer = styled.div`
     display: flex;
@@ -23,22 +29,10 @@ export default class HomeWeatherWidget extends React.Component {
 
         }
         this.getCurrentWeather = this.getCurrentWeather.bind(this);
-        this.getWeatherIcon = this.getWeatherIcon.bind(this);
     }
 
     componentDidMount() {
         this.getCurrentWeather();
-        console.log(sunnyIcon);
-    }
-
-    getWeatherIcon() {
-        switch(this.state.weather) {
-            case "Clouds":
-                return cloudyIcon;
-                break;
-            default:
-                return sunnyIcon;
-        }
     }
 
     getCurrentWeather() {
@@ -53,7 +47,7 @@ export default class HomeWeatherWidget extends React.Component {
         return (
             <HomeWeatherWidgetContainer>
                 <p> {this.state.currentTemp}&#176; </p>
-                <img src={this.getWeatherIcon()} />
+                <img src={weatherIcons[`${this.state.weather}.svg`]} />
             </HomeWeatherWidgetContainer>
         )
     }
