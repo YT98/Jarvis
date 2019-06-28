@@ -42,7 +42,7 @@ export default class HomeWeatherWidget extends React.Component {
     }
 
     getCurrentWeather() {
-        fetch("http://localhost:5000/currentweather")
+        fetch("http://localhost:5000/weather/current")
         .then(res => res.json())
         .then(data => {
             this.setState({...data});

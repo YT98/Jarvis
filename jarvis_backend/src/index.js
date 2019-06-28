@@ -1,6 +1,7 @@
 import cors from 'cors';
-import weatherRouter from './weatherApi/weatherRouter';
 import express from 'express';
+import weatherRouter from './weatherApi/weatherRouter';
+import { initializeWeatherCron } from './weatherApi/getWeather';
 import { initializeSocket } from './socket';
 import { startRecording } from './audio/startRecording';
 import { actionSwitch } from './mirrorActions';
@@ -9,7 +10,10 @@ const app = express();
 
 // Express middleware configuration
 app.use(cors());
+
+// Weather
 app.use('/weather', weatherRouter);
+initializeWeatherCron();
 
 // Socket initialization
 const SOCKET_PORT = 8000;

@@ -1,30 +1,28 @@
 import fetch from 'node-fetch';
 import fs from 'fs';
 import config from '../config';
+import cron from 'node-cron';
 
 const city = "Montreal";
 const countryCode = "CA";
+const lat = "45.485350";
+const long = "-73.598900"
 const weatherFilePath = "./src/currentWeather.json"
 
 // Takes in weather api data and only returns relevant data
 function getRelevant(data) {
-    function convertToCelsius(temp) {
-        return Math.round(temp - 273.15);
-    }
     return {
-        currentTemp: convertToCelsius(data.main.temp),
-        minTemp: convertToCelsius(data.main.temp_min),
-        maxTemp: convertToCelsius(data.main.temp_max),
-        weather: data.weather[0].main,
-        weatherDescription: data.weather[0].description
+        currentTemp: data.currently.temperature,
+        weather: data.currently.icon,
+        weatherDescription: data.currently.summary
     }
 }
 
 // Gets weather from open source map api
 function getCurrentWeather() {
-    return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${config.weatherApiKey}`)
-    .then(res => res.json())
-    .catch(e => console.log(e));
+    return fetch(`https://api.darksky.net/forecast/${config.weatherApiKey}/${latitude},${longitude}?units=si&exclude=minutely,alerts,flags`)
+        .then(res => res.json())
+        .catch(e => console.log(e));
 }
 
 // Saves weather api data to locally stored json file
@@ -40,8 +38,18 @@ function saveCurrentWeather() {
     .catch(e => console.log(e));
 }
 
+
+function initializeWeatherCron() {
+    // Get current weather with cron job
+    cron.schedule('0 * * * *', () => {
+        saveCurrentWeather();
+        console.log("Saving current weather - runs every hour.");
+    });
+}
+
 export { 
     getCurrentWeather,
-    saveCurrentWeather
+    saveCurrentWeather,
+    initializeWeatherCron
 }
 
