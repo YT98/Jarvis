@@ -26,6 +26,11 @@ app.get('/transcribe', async (req, res) => {
             getTranscription(fileName)
                 .then(transcription => {
                     let action = actionSwitch(transcription);
+                    let appInfo = {
+                        appName: action,
+                        data: null
+                    }
+                    req.io.emit('message', JSON.stringify(appInfo));
                     res.send(action);
                 })
                 .catch(e => console.log(e));

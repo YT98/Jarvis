@@ -2,7 +2,10 @@ import React from 'react';
 import openSocket from 'socket.io-client';
 import Home from './Home';
 
-import styled, { createGlobalStyle } from 'styled-components'
+import PlaceholderAppInfo from './miscComponents/PlaceholderAppInfo';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const socket = openSocket('http://localhost:8000');
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,26 +31,28 @@ export default class App extends React.Component {
         this.state = {
             appName: ""
         }
+        this.updateAppName = this.updateAppName.bind(this);
+    }
+
+    updateAppName(message) {
+        let data = JSON.parse(message);
+        console.log(message);
+        this.setState({ appName: data.appName });
     }
 
     componentDidMount() {
-        // Log all messages from socket to console
-        const socket = openSocket('http://localhost:8000');
-        this.setState({
-            socket: socket
-        }, () => {
-            socket.on('message', (message) => {
-                let data = JSON.parse(message);
-                this.setState({ appName: data.app })
-            });
-        });
+        socket.on('message', (message) => this.updateAppName(message));
+    }
+
+    componentWillUnmount() {
+        socket.off('message', (message) => this.updateAppName(message));
     }
 
     render() {
         return (
             <AppContainer>
                 <GlobalStyle/>
-                {/* <p> {this.state.appName} </p> */}
+                <PlaceholderAppInfo appName={this.state.appName} />
                 <Home/>
             </AppContainer>
         )
