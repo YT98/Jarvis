@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import fs from 'fs';
-import config from './config';
+import config from '../config';
 
 const city = "Montreal";
 const countryCode = "CA";
