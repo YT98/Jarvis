@@ -12,6 +12,7 @@ app.use(cors());
 app.use('/weather', weatherRouter);
 
 // Socket initialization
+const SOCKET_PORT = 8000;
 initializeSocket(SOCKET_PORT, app);
 
 // Speech recognition
@@ -29,6 +30,5 @@ app.get('/transcribe', async (req, res) => {
 });
 
 // Express server listening
-const SOCKET_PORT = 8000;
 const APP_PORT = 5000;
 app.listen(APP_PORT, () => console.log(`Express server listening on port ${APP_PORT}`));
