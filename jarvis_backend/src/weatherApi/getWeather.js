@@ -7,12 +7,54 @@ const lat = "45.485350";
 const long = "-73.598900"
 const weatherFilePath = "./src/currentWeather.json"
 
+// Takes in UNIX timestamp and returns formatted time
+function formatTime(time) {
+    let date = new Date(time*1000);
+    return {
+        hour: date.getHours(),
+        day: date.getDate()
+    }
+}
+
 // Takes in weather api data and only returns relevant data
 function sanitizeData(data) {
+
+    function relevantData(data) {
+        if (data.temperature) {
+            return {
+                temp: Math.round(data.temperature),
+                weather: data.icon,
+                description: data.summary,
+                hour: formatTime(data.time).hour
+            }
+        }
+        if (data.temperatureMin) {
+            return {
+                minTemp: Math.round(data.temperatureLow),
+                maxTemp: Math.round(data.temperatureHigh),
+                weather: data.icon,
+                description: data.summary,
+                day: formatTime(data.time).day
+            }
+        }
+    }
+
+    let daily = [];
+    data.daily.data.forEach(day => {
+        daily.push(relevantData(day));
+    });
+
+    let hourly = [];
+    data.hourly.data.forEach(hour => {
+        hourly.push(relevantData(hour));
+    });
+
     return {
         currentTemp: Math.round(data.currently.temperature),
-        weather: data.currently.icon,
-        description: data.currently.summary
+        currentWeather: data.currently.icon,
+        currentDescription: data.daily.data[0].summary,
+        daily: daily,
+        hourly: hourly
     }
 }
 
@@ -36,9 +78,9 @@ function saveCurrentWeather() {
     .catch(e => console.log(e));
 }
 
-
+// Initialization function for cron job that
+// fetches weather information every hour
 function initializeWeatherCron() {
-    // Get current weather with cron job
     cron.schedule('0 * * * *', () => {
         saveCurrentWeather();
         console.log("Saving current weather - runs every hour.");
