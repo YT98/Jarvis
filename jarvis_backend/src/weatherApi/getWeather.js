@@ -12,7 +12,8 @@ function formatTime(time) {
     let date = new Date(time*1000);
     return {
         hour: date.getHours(),
-        day: date.getDate()
+        day: date.getDate(),
+        month: date.getMonth()
     }
 }
 
@@ -34,7 +35,8 @@ function sanitizeData(data) {
                 maxTemp: Math.round(data.temperatureHigh),
                 weather: data.icon,
                 description: data.summary,
-                day: formatTime(data.time).day
+                day: formatTime(data.time).day,
+                month: formatTime(data.time).month
             }
         }
     }
@@ -59,14 +61,21 @@ function sanitizeData(data) {
 }
 
 // Gets weather from open source map api
-function getCurrentWeather() {
+export function getCurrentWeather() {
     return fetch(`https://api.darksky.net/forecast/${config.weatherApiKey}/${lat},${long}?units=si&exclude=minutely,alerts,flags`)
         .then(res => res.json())
         .catch(e => console.log(e));
 }
 
+// Returns data from currentWeather.json
+export function getWeatherFromFile() {
+    let weatherData = JSON.parse(fs.readFileSync(__dirname + '/../currentWeather.json'));
+    console.log(weatherData);
+    return weatherData;
+}
+
 // Saves weather api data to locally stored json file
-function saveCurrentWeather() {
+export function saveCurrentWeather() {
     getCurrentWeather()
     .then(data => {
         let weatherJson = JSON.stringify(sanitizeData(data));
@@ -80,16 +89,10 @@ function saveCurrentWeather() {
 
 // Initialization function for cron job that
 // fetches weather information every hour
-function initializeWeatherCron() {
+export function initializeWeatherCron() {
     cron.schedule('0 * * * *', () => {
         saveCurrentWeather();
         console.log("Saving current weather - runs every hour.");
     });
-}
-
-export { 
-    getCurrentWeather,
-    saveCurrentWeather,
-    initializeWeatherCron
 }
 
